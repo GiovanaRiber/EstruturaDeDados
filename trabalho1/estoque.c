@@ -139,8 +139,8 @@ void VerificaListaMedicamento(FILE * fp, Lista* lista, int codigo){
 
 int ComparaDatas(int *data1, int *data2){ //retorna a diferença entre as datas
 
-    if(data1[2] != data2[2]) //compara ano         se a diferença seja negativa, data1 é anterior à data2
-        return data1[2] - data2[2];              //se a diferença seja positiva, data1 é posteror à que data2
+    if(data1[2] != data2[2]) //compara ano         caso a diferença seja negativa, data1 é anterior à data2
+        return data1[2] - data2[2];              //caso a diferença seja positiva, data1 é posteror à que data2
 
     else if(data1[1] != data2[1])//compara mês
         return data1[1] - data2[1];
