@@ -15,7 +15,7 @@ Lista* CriaMedicamento(char *nome, int codigo, float valor, int *data){
 
     novo->m = (Medicamento*) malloc(sizeof(Medicamento));
 
-    if(novo == NULL){
+    if(novo->m == NULL){
         printf("Erro ao alocar memoria!\n"); exit(1);
     }
 
