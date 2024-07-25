@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include <time.h>
 
-void mistureVetor ( int arr [] , int n ){
+void mistureVetor(int arr[] , int n){
 
-    for( int i = 0; i < n; i ++){
+    for(int i = 0; i < n; i ++){
 
-        if (( rand () / ( double ) RAND_MAX ) < 0.5){
+        if(( rand () / ( double ) RAND_MAX ) < 0.5){
 
-            int j = ( int ) ((n -1) *( rand () /( double ) RAND_MAX ));
+            int j = (int) ((n -1) *( rand () /( double ) RAND_MAX ));
             int temp = arr [i];
             arr [i] = arr [j];
             arr [j] = temp;
@@ -54,7 +54,7 @@ int main(){
             arr [j] = j;
         }
        
-        for (int j = 0; j < 30; j ++){
+        for(int j = 0; j < 30; j ++){
 
             mistureVetor (arr, tam);
             int iteracoes;

@@ -2,9 +2,12 @@
 #include <stdlib.h>
 #include <time.h>
 
-void mistureVetor(int arr[], int n) {
-    for (int i = 0; i < n; i++) {
-        if ((rand() / (double)RAND_MAX) < 0.5) {
+void mistureVetor(int arr[], int n){
+
+    for(int i = 0; i < n; i++){
+
+        if((rand() / (double)RAND_MAX) < 0.5){
+            
             int j = (int)((n - 1) * (rand() / (double)RAND_MAX));
             int temp = arr[i];
             arr[i] = arr[j];
@@ -17,7 +20,7 @@ void merge(int arr[], int inicio, int meio, int final, int *iteracoes);
 
 void mergeSort(int arr[], int inicio, int final, int *iteracoes){
 
-    if (inicio < final){
+    if(inicio < final){
 
         int meio = (inicio + final) / 2;
         mergeSort(arr, inicio, meio, iteracoes);
@@ -36,7 +39,7 @@ void merge(int arr[], int inicio, int meio, int final, int *iteracoes){
 
         (*iteracoes)++;
 
-        if (arr[com1] <= arr[com2]) {
+        if(arr[com1] <= arr[com2]){
             arrAux[comAux] = arr[com1]; com1++;
         } else {
             arrAux[comAux] = arr[com2]; com2++;
@@ -44,17 +47,17 @@ void merge(int arr[], int inicio, int meio, int final, int *iteracoes){
         comAux++;
     }
 
-    while (com1 <= meio) {
+    while(com1 <= meio){
         arrAux[comAux] = arr[com1];
         comAux++; com1++;
     }
 
-    while (com2 <= final) {
+    while(com2 <= final){
         arrAux[comAux] = arr[com2];
         comAux++; com2++;
     }
 
-    for (comAux = 0; comAux < final - inicio + 1; comAux++) {
+    for(comAux = 0; comAux < final - inicio + 1; comAux++){
         arr[inicio + comAux] = arrAux[comAux];
     }
 }
@@ -66,17 +69,18 @@ int main(){
 
     FILE *fp_merge = fopen("MergeSortIteracoesCasoMedio.txt", "w");
 
-    srand(time(0)); // Iniciar os números aleatórios
+    srand(time(0));
     // Loop pelos tamanhos de vetor
-    for (int i = 0; i < num_tamanhos; i++) {
+    for(int i = 0; i < num_tamanhos; i++){
+
         int tam = tamanhos[i];
         int *arr = (int *)malloc(tam * sizeof(int));
         // Preencher o array com valores crescentes
-        for (int j = 0; j < tam; j++) {
+        for(int j = 0; j < tam; j++) {
             arr[j] = j;
         }
         // Executar 30 repetições para obter o caso médio
-        for (int j = 0; j < 30; j++) {
+        for(int j = 0; j < 30; j++) {
             mistureVetor(arr, tam);
             int iteracoes = 0;
             // Merge Sort
@@ -94,11 +98,12 @@ int main(){
 
     FILE *fp_merge_2 = fopen("MergeSortIteracoesPiorCaso.txt", "w");
 
-    for (int i = 0; i < num_tamanhos; i++) {
+    for(int i = 0; i < num_tamanhos; i++){
+
         int tam2 = tamanhos[i];
         int *arr2 = (int *)malloc(tam2 * sizeof(int));
 
-        for (int j = 0; j < tam2; j++) {
+        for(int j = 0; j < tam2; j++){
             arr2[j] = tam2 - 1 - j;
         }
 

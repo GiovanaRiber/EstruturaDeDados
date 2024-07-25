@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <time.h>
 
-void mistureVetor ( int arr [] , int n ){
+void mistureVetor(int arr[] , int n ){
 
-    for ( int i = 0; i < n; i ++){
+    for(int i = 0; i < n; i ++){
 
-        if (( rand () / ( double ) RAND_MAX ) < 0.5){
+        if(( rand () / ( double ) RAND_MAX ) < 0.5){
 
             int j = ( int ) ((n -1) *( rand () /( double ) RAND_MAX ));
             int temp = arr [i];
@@ -25,7 +25,7 @@ void insertionSort(int arr[] , int n , int * iteracoes){
 
         aux = arr[i];
 
-        for (j = i; (j > 0) && aux < arr[j-1]; j--){
+        for(j = i; (j > 0) && aux < arr[j-1]; j--){
 
             (*iteracoes)++;
 
@@ -51,11 +51,11 @@ int main(){
 
         int * arr = (int *) malloc(tam * sizeof (int));
         // Preencher o array com valores crescentes
-        for (int j = 0; j < tam ; j ++){
+        for(int j = 0; j < tam ; j ++){
             arr [j ] = j;
         }
         // Executar 30 repeticoes para obter o caso medio
-        for (int j = 0; j < 30; j ++){
+        for(int j = 0; j < 30; j ++){
 
             mistureVetor (arr, tam);
             int iteracoes = 0;
