@@ -3,6 +3,18 @@
 #include <string.h>
 #include <stdlib.h>
 
+struct medicamento{
+    int codigo;
+    char nome[20];
+    float valor;
+    int data[3];
+}; typedef struct medicamento  Medicamento;
+
+struct Lista{
+    Medicamento *m;
+    struct Lista *prox;
+}; typedef struct Lista Lista;
+
 Lista* CriaLista(void){ return NULL; }
 
 Lista* CriaMedicamento(char *nome, int codigo, float valor, int *data){
