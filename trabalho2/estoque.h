@@ -6,6 +6,7 @@
 
 typedef struct medicameto Medicamento;
 typedef struct arvore Arvore;
+typedef struct votacao TiposVotos;
 
 Medicamento* CriaMedicamento (int codigo, char* nome, float valor, int* data);
 
