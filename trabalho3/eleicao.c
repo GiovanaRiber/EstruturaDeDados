@@ -43,10 +43,10 @@ Lista* inserirChapaLista(Lista* lista, Chapa* c) {
     return nova;
 }
 
-void visualizarChapas(Lista* lista) { // impressão da chapas
+void visualizarChapas(Lista* lista) { // impressão das chapas
     while (lista != NULL) {
         printf("-----------------------------------\n");
-        printf("| %-10s: %-19s |\n", "Candidato", lista->c->nome);
+        printf("| %-10s: %-19s |\n", "Candidato", lista->c->nome); // formatação de espaço
         printf("| %-10s: %-19s |\n", "Vice", lista->c->nomeVice);
         printf("| %-10s: %-19d |\n", "Numero", lista->c->numero);
         printf("-----------------------------------\n");
@@ -55,7 +55,7 @@ void visualizarChapas(Lista* lista) { // impressão da chapas
     printf("===================================\n");
 }
 
-int compararIdade(int nasc1[3], int nasc2[3]) { // comparar a idade dos candidados
+int compararIdade(int nasc1[3], int nasc2[3]) { // comparar a idade dos candidadatos
     if (nasc1[2] != nasc2[2])
         return nasc1[2] - nasc2[2]; // para ano
     else if (nasc1[1] != nasc2[1])
@@ -73,7 +73,7 @@ int verificacaoNumero(Lista* lista, int numero) { // confirmar se número cadast
     return 0;
 }
 
-void contarVotos(Lista* lista, int eleitores, TiposVotos *v) { // contar a armazenar os votos
+void contarVotos(Lista* lista, int eleitores, TiposVotos *v) { // contar e armazenar os votos
 
     int cont = 0, op = 0, quantEleitores = 0; // variáveis auxiliares
 
@@ -119,25 +119,25 @@ void contarVotos(Lista* lista, int eleitores, TiposVotos *v) { // contar a armaz
 void gerarBoletim(Lista* lista, TiposVotos v, FILE* arq) {
 
     fprintf(arq, "================= BOLETIM ELEITORAL ================\n");
-    fprintf(arq, "| %-20s | %-10s | %-10s |\n", "CANDIDATO", "VOTOS", "PORCENTAGEM"); // formatar a distância as mensagens no arquivo
+    fprintf(arq, "| %-20s | %-10s | %-10s |\n", "CANDIDATO", "VOTOS", "PORCENTAGEM"); // formatar a distância das mensagens no arquivo
     fprintf(arq, "----------------------------------------------------\n");
 
     Lista* temp = lista;
     int validos = 0; // referente aos votos válidos, ou seja, ñ nulos e ñ brancos 
 
     while (temp != NULL) {
-        temp->c->porcentagem = (v.votosTotais > 0) ? ((float)temp->c->votos * 100 / v.votosTotais) : 0.0;    // cálculo simplificado da porcentagem,
-        fprintf(arq, "| %-20s | %-10d | %10.2f%% |\n", temp->c->nome, temp->c->votos, temp->c->porcentagem); //    adicona 0.0 para evitar a divisão por zero
-        validos += temp->c->votos; // incrementa os votos válidos 
+        temp->c->porcentagem = (v.votosTotais > 0) ? ((float)temp->c->votos * 100 / v.votosTotais) : 0.0; // cálculo simplificado da porcentagem
+        fprintf(arq, "| %-20s | %-10d | %10.2f%% |\n", temp->c->nome, temp->c->votos, temp->c->porcentagem); // |  
+        validos += temp->c->votos; // incrementa os votos válidos                                                -> adiciona 0.0 se necessário para evitar a divisão por zero
         temp = temp->prox;
     }
     fprintf(arq, "----------------------------------------------------\n");
     fprintf(arq, "| %-20s | %-10d | %10.2f%% |\n", "VOTOS VALIDOS", validos,
-            (v.votosTotais > 0) ? ((float)validos * 100 / v.votosTotais) : 0.0); // porcentagem
+            (v.votosTotais > 0) ? ((float)validos * 100 / v.votosTotais) : 0.0); // porcentagem dos válidos
     fprintf(arq, "| %-20s | %-10d | %10.2f%% |\n", "VOTOS EM BRANCO", v.brancos,
-            (v.votosTotais > 0) ? ((float)v.brancos * 100 / v.votosTotais) : 0.0); // porcentagem
+            (v.votosTotais > 0) ? ((float)v.brancos * 100 / v.votosTotais) : 0.0); // porcentagem dos brancos
     fprintf(arq, "| %-20s | %-10d | %10.2f%% |\n", "VOTOS NULOS", v.nulos,
-            (v.votosTotais > 0) ? ((float)v.nulos * 100 / v.votosTotais) : 0.0); // porcentagem
+            (v.votosTotais > 0) ? ((float)v.nulos * 100 / v.votosTotais) : 0.0); // porcentagem dos válidos
     fprintf(arq, "----------------------------------------------------\n");
     fprintf(arq, "| %-20s | %-10d |\n", "TOTAL DE VOTOS", v.votosTotais);
     fprintf(arq, "====================================================\n");
