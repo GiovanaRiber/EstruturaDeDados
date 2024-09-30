@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "interface.h"
+#include "eleicao.h"
 
 struct chapa { // para armazenar as chapas eleitorais
     char nome[50];
