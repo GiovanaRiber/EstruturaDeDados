@@ -215,10 +215,10 @@ void votacaoChapa(Lista* lista, int eleitores, int turno, FILE* arq, int tamList
         }
      } else { // caso sera o segundo turno
 
-        if (candidato1->c->votos > candidato2->c->votos) // primeiro candidato mais velho
+        if (candidato1->c->votos > candidato2->c->votos) // primeiro candidato vence
             printf("O candidato %s com o vice %s venceu a eleicao no segundo turno com %.2f%% dos votos!\n",
                     candidato1->c->nome, candidato1->c->nomeVice, candidato1->c->porcentagem);
-        else if (candidato1->c->votos < candidato2->c->votos) // segundo candidato mais velho
+        else if (candidato1->c->votos < candidato2->c->votos) // segundo candidato vence
             printf("O candidato %s com o vice %s venceu a eleicao no segundo turno com %.2f%% dos votos!\n",
                     candidato2->c->nome, candidato2->c->nomeVice, candidato2->c->porcentagem);
         else // empate
