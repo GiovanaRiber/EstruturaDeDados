@@ -16,7 +16,7 @@ int main() {
     printf("Insira o numero e eleitores: ");
     scanf("%d", &eleitores);
 
-    while(eleitores < 0 || eleitores < 2) { // verificação adicional
+    while (eleitores < 2) { // verificação adicional
         printf("Valor invalido! Tente novamente: ");
         scanf("%d", &eleitores);
      }
