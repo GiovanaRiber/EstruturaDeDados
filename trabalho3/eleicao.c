@@ -137,7 +137,7 @@ void gerarBoletim(Lista* lista, TiposVotos v, FILE* arq) {
     fprintf(arq, "| %-20s | %-10d | %10.2f%% |\n", "VOTOS EM BRANCO", v.brancos,
             (v.votosTotais > 0) ? ((float)v.brancos * 100 / v.votosTotais) : 0.0); // porcentagem dos brancos
     fprintf(arq, "| %-20s | %-10d | %10.2f%% |\n", "VOTOS NULOS", v.nulos,
-            (v.votosTotais > 0) ? ((float)v.nulos * 100 / v.votosTotais) : 0.0); // porcentagem dos válidos
+            (v.votosTotais > 0) ? ((float)v.nulos * 100 / v.votosTotais) : 0.0); // porcentagem dos nulos
     fprintf(arq, "----------------------------------------------------\n");
     fprintf(arq, "| %-20s | %-10d |\n", "TOTAL DE VOTOS", v.votosTotais);
     fprintf(arq, "====================================================\n");
@@ -186,7 +186,7 @@ void votacaoChapa(Lista* lista, int eleitores, int turno, FILE* arq, int tamList
     }
 
     if (turno == 1) { // caso ñ tenha vencendor com base nas porcentagem
-        if (eleitores >= 10 && tamLista != 2) { // caso tenha mais de 10 eleitores e mais de dois candidatos vai para o segundo turno
+        if (eleitores >= 10 && tamLista != 2) { // caso tenha mais de 10 eleitores e mais de dois candidatos, vai para o segundo turno
 
             printf("Nenhum candidato obteve mais de 50%% dos votos validos. Havera segundo turno !\n");
             fprintf(arq, "HAVERA SEGUNDO TURNO!");
