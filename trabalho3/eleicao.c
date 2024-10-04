@@ -191,7 +191,7 @@ void votacaoChapa(Lista* lista, int eleitores, int turno, FILE* arq, int tamList
 
             if (candidato1->c->votos == candidato2->c->votos) { // empate
                 imprimirMaisVelho(candidato1->c, candidato2->c,
-                "Empate! O candidato mais velho vencerá!\n", "no primeiro turno");
+                "Empate! O candidato mais velho vencera!\n", "no primeiro turno");
                 return;
             } else {
 
