@@ -187,9 +187,9 @@ void votacaoChapa(Lista* lista, int eleitores, int turno, FILE* arq, int tamList
 
     if (turno == 1) { // caso ñ tenha vencendor com base nas porcentagem
 
-        if (tamLista == 2) {
+        if (tamLista == 2) { // caso tenha somente dois candidatos
 
-            if (candidato1->c->votos == candidato2->c->votos) { // caso empate no primeito turno
+            if (candidato1->c->votos == candidato2->c->votos) { // empate
                 imprimirMaisVelho(candidato1->c, candidato2->c,
                 "Empate! O candidato mais velho vencerá!\n", "no primeiro turno");
                 return;
@@ -202,29 +202,28 @@ void votacaoChapa(Lista* lista, int eleitores, int turno, FILE* arq, int tamList
             }
         }
 
-        if (eleitores >= 10 && tamLista != 2) { // caso tenha mais de 10 eleitores e mais de dois candidatos, vai para o segundo turno
-
-            printf("Nenhum candidato obteve mais de 50%% dos votos validos. Havera segundo turno !\n");
-            fprintf(arq, "HAVERA SEGUNDO TURNO!");
-
-            Lista* listaTemp = NULL; // lista auxiliar para armazenar os dois candidatos mais votados para ir ao segundo turno 
-            listaTemp = inserirChapaLista(listaTemp, candidato2->c); // adição candidato 1
-            listaTemp = inserirChapaLista(listaTemp, candidato1->c); // adição candidato 2
-
-            FILE* arq2 = fopen("turno_2.txt", "w"); // abertura do arquivo referente ao segundo turno
-            if (arq2 == NULL) { printf("Erro ao abrir o arquivo !\n"); exit(1); }
-
-            votacaoChapa(listaTemp, eleitores, 2, arq2, tamLista); // chamada recursiva para o segundo turno
-            fclose(arq2); // fechamento do arquivo
-            liberarLista(listaTemp); // liberação da memória da lista auxiliar 
+        if (eleitores < 10) { // caso tenha menos de 10 eleitores ñ vai para segundo turno
+            Lista* vencedor = (candidato1->c->votos > candidato2->c->votos) ? candidato1 : candidato2;
+            printf("Nao ha eleitores suficientes para um segundo turno, logo, o candidato mais votado %s e seu vice %s venceram o primeiro turno com %.2f%% dos votos!\n",
+                    vencedor->c->nome, vencedor->c->nomeVice, vencedor->c->porcentagem);
             return;
+        }
 
-        } else if (eleitores < 10) { // caso tenha menos de 10 eleitores ñ vai para segundo turno e o candidato mais velho ganha
-            imprimirMaisVelho(candidato1->c, candidato2->c,
-            "Nao ha eleitores suficientes para um segundo turno, logo, o candidato mais velho vencera!\n", "no primeiro turno");
-            return;
+        printf("Nenhum candidato obteve mais de 50%% dos votos validos. Havera segundo turno !\n");
+        fprintf(arq, "HAVERA SEGUNDO TURNO!");
 
-        } 
+        Lista* listaTemp = NULL; // lista auxiliar 
+        listaTemp = inserirChapaLista(listaTemp, candidato2->c);
+        listaTemp = inserirChapaLista(listaTemp, candidato1->c);
+
+        FILE* arq2 = fopen("turno_2.txt", "w");
+        if (arq2 == NULL) { printf("Erro ao abrir o arquivo !\n"); exit(1); }
+
+        votacaoChapa(listaTemp, eleitores, 2, arq2, tamLista); // chamada recursiva para o segundo turno 
+        fclose(arq2);
+        liberarLista(listaTemp);
+        return;
+
      } else { // caso sera o segundo turno
 
         if (candidato1->c->votos > candidato2->c->votos) // primeiro candidato vence
