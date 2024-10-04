@@ -189,16 +189,17 @@ void votacaoChapa(Lista* lista, int eleitores, int turno, FILE* arq, int tamList
 
         if (tamLista == 2) {
 
-            if (candidato1->c->votos == candidato2->c->votos) { // caso tenha empate entre os candidatos
+            if (candidato1->c->votos == candidato2->c->votos) { // caso empate no primeito turno
                 imprimirMaisVelho(candidato1->c, candidato2->c,
-                "Empate! O candidato mais velho vencera!\n", "no primeiro turno");
+                "Empate! O candidato mais velho vencerá!\n", "no primeiro turno");
+                return;
+            } else {
+
+                Lista* vencedor = (candidato1->c->votos > candidato2->c->votos) ? candidato1 : candidato2;
+                printf("Nenhum dos candidatos obteve mais de 50%% dos votos, logo, o candidato %s e seu vice %s venceram o primeiro turno com %.2f%% dos votos!\n",
+                       vencedor->c->nome, vencedor->c->nomeVice, vencedor->c->porcentagem);
                 return;
             }
-
-            // caso haja apenas dois candidatos na lista, ñ vai pra segundo turno, logo, o candidato mais velho vencerá
-            imprimirMaisVelho(candidato1->c, candidato2->c,
-            "Nenhum dos dois candidatos obteve mais de 50%% dos votos, logo, o candidato mais velho vencera!\n", "no primeiro turno");
-            return;
         }
 
         if (eleitores >= 10 && tamLista != 2) { // caso tenha mais de 10 eleitores e mais de dois candidatos, vai para o segundo turno
