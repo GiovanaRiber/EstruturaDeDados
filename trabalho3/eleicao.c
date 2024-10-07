@@ -20,7 +20,6 @@ struct lista { // lista
 struct votacao { // para armazenar os tipos diferentes de votos
     int nulos;
     int brancos;
-    int votosTotais;
 };
 
 Chapa* criarChapa(char *nome, int numero, int *nascimento, char *nomeVice) { // criação da chapa eleitoral
@@ -89,7 +88,6 @@ void contarVotos(Lista* lista, int eleitores, TiposVotos *v) { // contar e armaz
 
         if (op == 0) { // se o eleitor votar em branco
             v->brancos++;
-            v->votosTotais++;
             printf("\nVoto em branco confirmado !\n");
         } else {
             Lista* temp = lista;
@@ -98,7 +96,6 @@ void contarVotos(Lista* lista, int eleitores, TiposVotos *v) { // contar e armaz
             while (temp != NULL) {
                 if (temp->c->numero == op) { // se o número digitado for igual ao do candidato armazenado
                     temp->c->votos++;
-                    v->votosTotais++;
                     printf("\nSeu voto em %s com Vice %s foi confirmado !\n", temp->c->nome, temp->c->nomeVice);
                     achou = 1; // incremento para indicar que o candidato foi encontrado na lista 
                     break;
@@ -107,7 +104,6 @@ void contarVotos(Lista* lista, int eleitores, TiposVotos *v) { // contar e armaz
             }
             if (achou == 0) { // caso o número digitado ñ seja igual ao de nenhum candidato cadastrado
                 v->nulos++;
-                v->votosTotais++;
                 printf("\nVoto nulo confirmado !\n");
             }
         }
@@ -116,7 +112,7 @@ void contarVotos(Lista* lista, int eleitores, TiposVotos *v) { // contar e armaz
     }
 }
 
-void gerarBoletim(Lista* lista, TiposVotos v, FILE* arq) {
+void gerarBoletim(Lista* lista, TiposVotos v, FILE* arq, int eleitores) {
 
     fprintf(arq, "================= BOLETIM ELEITORAL ================\n");
     fprintf(arq, "| %-20s | %-10s | %-10s |\n", "CANDIDATO", "VOTOS", "PORCENTAGEM"); // formatar a distância das mensagens no arquivo
@@ -126,20 +122,20 @@ void gerarBoletim(Lista* lista, TiposVotos v, FILE* arq) {
     int validos = 0; // referente aos votos válidos, ou seja, ñ nulos e ñ brancos 
 
     while (temp != NULL) {
-        temp->c->porcentagem = (v.votosTotais > 0) ? ((float)temp->c->votos * 100 / v.votosTotais) : 0.0; // cálculo simplificado da porcentagem
+        temp->c->porcentagem = (eleitores > 0) ? ((float)temp->c->votos * 100 / eleitores) : 0.0; // cálculo simplificado da porcentagem
         fprintf(arq, "| %-20s | %-10d | %10.2f%% |\n", temp->c->nome, temp->c->votos, temp->c->porcentagem); // |  
         validos += temp->c->votos; // incrementa os votos válidos                                                -> adiciona 0.0 se necessário para evitar a divisão por zero
         temp = temp->prox;
     }
     fprintf(arq, "----------------------------------------------------\n");
     fprintf(arq, "| %-20s | %-10d | %10.2f%% |\n", "VOTOS VALIDOS", validos,
-            (v.votosTotais > 0) ? ((float)validos * 100 / v.votosTotais) : 0.0); // porcentagem dos válidos
+            (eleitores > 0) ? ((float)validos * 100 / eleitores) : 0.0); // porcentagem dos válidos
     fprintf(arq, "| %-20s | %-10d | %10.2f%% |\n", "VOTOS EM BRANCO", v.brancos,
-            (v.votosTotais > 0) ? ((float)v.brancos * 100 / v.votosTotais) : 0.0); // porcentagem dos brancos
+            (eleitores > 0) ? ((float)v.brancos * 100 / eleitores) : 0.0); // porcentagem dos brancos
     fprintf(arq, "| %-20s | %-10d | %10.2f%% |\n", "VOTOS NULOS", v.nulos,
-            (v.votosTotais > 0) ? ((float)v.nulos * 100 / v.votosTotais) : 0.0); // porcentagem dos nulos
+            (eleitores > 0) ? ((float)v.nulos * 100 / eleitores) : 0.0); // porcentagem dos nulos
     fprintf(arq, "----------------------------------------------------\n");
-    fprintf(arq, "| %-20s | %-10d |\n", "TOTAL DE VOTOS", v.votosTotais);
+    fprintf(arq, "| %-20s | %-10d |\n", "TOTAL DE VOTOS", eleitores);
     fprintf(arq, "====================================================\n");
 }
 
@@ -154,7 +150,7 @@ void imprimirMaisVelho(Chapa* candidato1, Chapa* candidato2, const char* mensage
 
 void votacaoChapa(Lista* lista, int eleitores, int turno, FILE* arq, int tamLista) {
 
-    TiposVotos v = {0, 0, 0}; // zera os votos da struct TiposVotos
+    TiposVotos v = {0, 0}; // zera os votos da struct TiposVotos
     Lista* temp = lista;
 
     while (temp != NULL) { temp->c->votos = 0; temp = temp->prox; } // zera os votos de cada candidato em seu respectivo nó
@@ -164,7 +160,7 @@ void votacaoChapa(Lista* lista, int eleitores, int turno, FILE* arq, int tamList
     printf("\n==== INICIO DO %s TURNO =====\n", (turno == 1) ? "PRIMEIRO" : "SEGUNDO"); // comparação simplificada para impressão da mensagem
 
     contarVotos(lista, eleitores, &v); // chama função de contagem
-    gerarBoletim(lista, v, arq); // gera o boletim eleitoral
+    gerarBoletim(lista, v, arq, eleitores); // gera o boletim eleitoral
 
     Lista* candidato1 = NULL, *candidato2 = NULL; // variáveis do tipo Lista
  

@@ -13,7 +13,7 @@ void visualizarChapas (Lista* lista);
 
 void contarVotos (Lista* lista, int eleitores, TiposVotos *v);
 
-void gerarBoletim (Lista* lista, TiposVotos v, FILE* arq);
+void gerarBoletim (Lista* lista, TiposVotos v, FILE* arq, int eleitores);
 
 void votacaoChapa (Lista* lista, int eleitores, int turno, FILE* arq, int tamLista);
 
